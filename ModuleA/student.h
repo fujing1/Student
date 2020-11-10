@@ -1,0 +1,1 @@
+#define MAXN 50
