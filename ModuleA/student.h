@@ -3,8 +3,8 @@
 
 struct student //学生信息结构体
 {
-	char name[MAXN];      //姓名
  	char num[MAXN];  //学号
+	char name[MAXN];      //姓名
 	int course_sum;  //选课总数
 	double score_sel; //已选课总学分
 	char course[50][MAXN];  //记录选课课程的编号
