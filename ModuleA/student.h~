@@ -1,10 +1,21 @@
 #define MAXN 50    //学生姓名，学好，课程名最大长度
+#define STU_F  "/home/fujing/Student/ModuleA/student.txt"  //文件存放路径及文件名
+student* load_stu();          //将学生文件生成链表,返回链表头指针
+void store_stu(student *p_head);       //将学生链表存入学生文件,需传入链表头指针
+student* locate_end(student *head);                         //传入头节点，返回尾节点
+int link_count(student* head);        //计算链表节点数量
+void menu();           //管理员主菜单，返回对应的输入值
+void s_insert(student *head);        //增加学生的函数
+void s_delete(student *head);        //删除学生的函数
+void s_earch_stu(student *head);        //搜索学生的函数
+void s_modify(student *head);       //管理员修改学生信息
 
 struct student //学生信息结构体
 {
 	char name[MAXN];      //姓名
  	char num[MAXN];  //学号
+	int course_sum;  //选课总数
 	double score_sel = 0; //已选课总学分
 	char course[50][MAXN];  //记录选课课程的编号
-	struct student *next;  //链表指针
+	struct student *next;
 };
