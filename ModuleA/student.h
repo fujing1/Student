@@ -11,10 +11,10 @@ struct student //学生信息结构体
 	struct student *next;
 };
 
-struct student load_stu();
+struct student* load_stu();
 void menu();                                 //主菜单
-void s_show(struct student *head);           //展示所有学生信息
 void s_insert(struct student *head);        //增加学生的函数
+void s_show_num(struct student *head);       //根据学号展示学生信息
 void s_delete(struct student *head);        //删除学生的函数
 void s_earch_stu(struct student *head);     //搜索学生的函数
 void s_modify(struct student *head);       //管理员修改学生信息

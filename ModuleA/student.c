@@ -16,7 +16,7 @@ int main()
 }
 
 /*录入学生信息子函数*/
-struct student load_stu()
+struct student *load_stu()
 {
 	int i=0;
 	FILE * fp;
@@ -27,9 +27,9 @@ struct student load_stu()
 		printf("找不到文件!\n"); 
 		exit(0); 
 	}
-	student* temp = (student*)malloc(sizeof(student));
+	struct student* temp = (struct student*)malloc(sizeof(struct student));
 	while (!feof(fp)){
-		if (fread(temp, sizeof(student), 1, fp))
+		if (fread(temp, sizeof(struct student), 1, fp))
 			N++;
 	}
 	free(temp);
@@ -39,16 +39,16 @@ struct student load_stu()
 		return NULL;
 	else{
 		rewind(fp);
-		student *p_head = NULL;//文件中有链表信息，则创建一个头指针
-		p_head = (student*)malloc(sizeof(student));
-		fread(p_head, sizeof(student), 1, fp);//用文件内容初始化链表节点
+		struct student *p_head = NULL;//文件中有链表信息，则创建一个头指针
+		p_head = (struct student*)malloc(sizeof(struct student));
+		fread(p_head, sizeof(struct student), 1, fp);//用文件内容初始化链表节点
 		p_head->next = NULL;
-		N--;
-		student* p_new = p_head;
-		student* p_end = p_head;
-		for (i = 0; i < count; i++){
-			p_new = (student*)malloc(sizeof(student));
-			fread(p_new, sizeof(student), 1, fp);
+		struct student* p_new = p_head;
+		struct student* p_end = p_head;
+		for (i = 0; i < N; i++){
+			p_new = (struct student*)malloc(sizeof(struct student));
+			fread(p_new, sizeof(struct student), 1, fp);
+			printf("%d\n",p_end->num);
 			p_new->next = NULL;
 			p_end->next = p_new;
 			p_end = p_new;
@@ -70,7 +70,11 @@ void s_save(struct student *head)
 	}
 	p=head;
 	while(p!=NULL){
-		fprintf(p,sizeof(struct student),1,fp);//将链表一个节点写入缓冲区
+		fprintf(fp,"%d %s %d %d ",p->num,p->name,p->course_sum,p->score_sel);
+		int j;
+		for(j=0;j<(p->course_sum);j++)
+			fprintf(fp,"%s",p->course[j]);
+		fprintf(fp,"\n");
 		p=p->next;      //p_head指向下一个节点
 	}
 	fclose(fp); //保存文件，清空缓冲区
@@ -154,7 +158,6 @@ void s_show_num(struct student *head)
 void s_insert(struct student *head){
 	struct student *p,*p0,*p1,*p2;
 	int i;
-	s_files();
 	p=(struct student *)malloc(sizeof(struct student));
 	printf("请输入学生学号:");
 	scanf("%d",&p->num);
@@ -166,7 +169,7 @@ void s_insert(struct student *head){
 	scanf("%d",&p->score_sel);
 	for(i=0;i<(p->course_sum);i++){
 		printf("请输入学生所选课程名称:");
-		scanf("%S",&p->course[i]);
+		scanf("%s",&p->course[i]);
 	}
 	p1=head;
 	p0=p;
@@ -191,12 +194,6 @@ void s_insert(struct student *head){
 			p0->next=NULL;
 		}
 	}
-	printf("%d\n",N);
 	N=N+1;
-	printf("%d\n",head->num);
-	printf("%s\n",head->name);
-	printf("%d\n",N);
 	s_save(head);
 }
-
-
