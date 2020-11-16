@@ -3,18 +3,15 @@
 
 struct student //学生信息结构体
 {
+ 	int num;  //学号
 	char name[MAXN];      //姓名
- 	char num[MAXN];  //学号
 	int course_sum;  //选课总数
-	double score_sel; //已选课总学分
-	char course[50][MAXN];  //记录选课课程的编号
+	int score_sel; //已选课总学分
+	char course[50][MAXN];  //记录选课课程
 	struct student *next;
 };
 
-struct student* load_stu();          //将学生文件生成链表,返回链表头指针
-void store_stu(struct student *p_head);       //将学生链表存入学生文件,需传入链表头指针
-struct student* locate_end(struct student *head);                         //传入头节点，返回尾节点
-int link_count(struct student* head);        //计算链表节点数量
+struct student load_stu();
 void menu();                                 //主菜单
 void s_show(struct student *head);           //展示所有学生信息
 void s_insert(struct student *head);        //增加学生的函数
