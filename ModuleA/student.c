@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <malloc.h>
 #include "student.h"
 
 
@@ -18,44 +17,32 @@ int main()
 /*录入学生信息子函数*/
 struct student *load_stu()
 {
-	int i=0;
 	FILE * fp;
 	struct student *p1,*p2;
-	N=0;
-	if((fp=fopen(STU_F,"r"))==NULL) 
-	{
+	N = 0;
+	int i;
+	if((fp=fopen(STU_F,"r"))==NULL) { 
 		printf("找不到文件!\n"); 
 		exit(0); 
-	}
-	struct student* temp = (struct student*)malloc(sizeof(struct student));
-	while (!feof(fp)){
-		if (fread(temp, sizeof(struct student), 1, fp))
-			N++;
-	}
-	free(temp);
-	temp = NULL;
-  
-	if (N == 0)
-		return NULL;
-	else{
-		rewind(fp);
-		struct student *p_head = NULL;//文件中有链表信息，则创建一个头指针
-		p_head = (struct student*)malloc(sizeof(struct student));
-		fread(p_head, sizeof(struct student), 1, fp);//用文件内容初始化链表节点
-		p_head->next = NULL;
-		struct student* p_new = p_head;
-		struct student* p_end = p_head;
-		for (i = 0; i < N; i++){
-			p_new = (struct student*)malloc(sizeof(struct student));
-			fread(p_new, sizeof(struct student), 1, fp);
-			printf("%d\n",p_end->num);
-			p_new->next = NULL;
-			p_end->next = p_new;
-			p_end = p_new;
-		}
-		fclose(fp);
-		return p_head;
-	}
+	} 
+	p1=p2=(struct student*)malloc(sizeof(struct student));
+	fscanf(fp,"%d%s%d%d",&p1->num,&p1->name,&p1->course_sum,&p1->score_sel,&p1->course);
+		for(i=0;i<(p1->course_sum);i++)
+			fscanf(fp,"%s",&p1->course[i]);
+	head = NULL;
+	while(!feof(fp)){
+		N = N + 1;
+		if(N == 1)
+			head = p1;
+		else
+			p2->next = p1;
+		p2=p1;
+		p1=(struct student * )malloc(sizeof(struct student));
+		fscanf(fp,"%d%s%d%d",&p1->num,&p1->name,&p1->course_sum,&p1->score_sel);
+		for(i=0;i<(p1->course_sum);i++)
+			fscanf(fp,"%s",&p1->course[i]);
+	} 
+	p2->next=NULL;
 }
 
 /*保存学生信息*/
@@ -73,7 +60,7 @@ void s_save(struct student *head)
 		fprintf(fp,"%d %s %d %d ",p->num,p->name,p->course_sum,p->score_sel);
 		int j;
 		for(j=0;j<(p->course_sum);j++)
-			fprintf(fp,"%s",p->course[j]);
+			fprintf(fp,"%s ",p->course[j]);
 		fprintf(fp,"\n");
 		p=p->next;      //p_head指向下一个节点
 	}
@@ -85,12 +72,8 @@ void s_save(struct student *head)
 void menu()
 {
 	int num;
-	while(num!=7){
 	printf(" \n                    \n");
-	printf("  ******************************************************\n\n");
-	printf("  *                学生信息管理系统                    *\n \n");
-	printf("  ******************************************************\n\n");
-	printf("*********************系统功能菜单*************************       \n");
+	printf("*********************学生管理功能菜单*************************       \n");
 	printf("     *********************************************     \n");
 	printf("     * 1.添加学生信息          * *  2.按学号查询学生信息   *     \n");
 	printf("     *********************************************     \n");
@@ -111,13 +94,14 @@ void menu()
 		case 2:
 			s_show_num(head);
 			break;
-		/*
-		case 3:
-			s_show_name(head);
-			break;
+		
+		//case 3:
+		//	s_show_name(head);
+		//	break;
 		case 4:
 			s_delete(head);
 			break;
+/*
 		case 5:
 			s_modify_name(head);
 			break;
@@ -128,29 +112,6 @@ void menu()
 			printf("即将退出程序!\n");
 			break;*/
 		default:printf("请在1-7之间选择\n");
-	}
-}
-}
-
-
-void s_show_num(struct student *head)
-{
-	
-	struct student *p;
-	p = head;
-	while (p != NULL)
-	{
-		printf("\n\t\t------------------------------------------------------");
- 		printf("\n\t\t学号：%d", p->num);
-		printf("\n\t\t姓名：%s", p->name);
-		printf("\n\t\t已选课程:\n");
-		int i;
-		for (i = 0; i < p->course_sum; i++)
-			printf("\t\t\t[%d]:%s\n", i + 1, p->course[i]);
-		printf("\t\t选课总数：%d", p->course_sum);
-		printf("\n\t\t已选课程总学分：%d", p->score_sel);
-		printf("\n\t\t------------------------------------------------------");
-		p = p->next;
 	}
 }
 
@@ -173,9 +134,9 @@ void s_insert(struct student *head){
 	}
 	p1=head;
 	p0=p;
-	if(head==NULL){
-		p->next = NULL;
-		head = p;
+	if(head == NULL){
+		head = p0;
+		p0->next=NULL;
 	}
 	else{
 		while((p0->num > p1->num) && (p1->next!=NULL)){
@@ -196,4 +157,64 @@ void s_insert(struct student *head){
 	}
 	N=N+1;
 	s_save(head);
+	end:;
+}
+
+/*按照学号查询*/
+void s_show_num(struct student *head)
+{
+	
+	struct student *p;
+	p = head;
+	int num1,flag=0;
+	printf("请输入要查询的学生的学号：\n");
+	scanf("%d",&num1);
+	while (p != NULL)
+	{
+		if ( num1 == p->num){
+			flag=1;
+			printf("\n\t\t------------------------------------------------------");
+ 			printf("\n\t\t学号：%d", p->num);
+			printf("\n\t\t姓名：%s", p->name);
+			printf("\n\t\t已选课程:\n");
+			int i;
+			for (i = 0; i < p->course_sum; i++)
+				printf("\t\t\t[%d]:%s\n", i + 1, p->course[i]);
+			printf("\t\t选课总数：%d", p->course_sum);
+			printf("\n\t\t已选课程总学分：%d", p->score_sel);
+			printf("\n\t\t------------------------------------------------------");
+			p = p->next;
+		}
+	}
+	if(flag == 0)
+		printf("无该学号学生!\n");
+}
+
+/*删除学生信息*/
+void s_delete(struct student *head){
+	int num1;
+	printf("请输入要删除的学生的学号：\n");
+	scanf("%d",&num1);
+	struct student *p1,*p2;
+	if(head==NULL){
+		printf("\n没有学生,无法删除!\n");
+		goto end;
+	}
+	p1=head;
+	while(num1!=p1->num && p1->next!=NULL){
+		p2=p1;
+		p1=p1->next;
+ 	}
+ 	if(num1==p1->num){
+		if(p1==head)
+			head = p1->next;
+		else
+			p2->next = p1->next;
+		printf("已删除该学号学生!\n");
+		N=N-1;
+		s_save(head);
+	}
+	else
+		printf("无该学号学生!\n");
+	end:;
 }
