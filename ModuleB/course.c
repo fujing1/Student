@@ -32,7 +32,7 @@ void c_save(struct course *c_head)
 }
 
 /*根据课程号查找课程*/
-struct course *find_num(struct course *c_head,int num){
+struct course *find_cnum(struct course *c_head,int num){
 	struct course *p,*q;
 	p=c_head;
 	q=NULL;
@@ -211,7 +211,7 @@ void c_show(struct course *c_head)
 	}
 }
 
-struct course *load_end(struct course *c_head)
+struct course *load_cend(struct course *c_head)
 {
 	struct course *p;
 	while (c_head != NULL){
@@ -224,11 +224,11 @@ struct course *load_end(struct course *c_head)
 /*根据课程号修改课程信息*/
 void c_modify(struct course *c_head){
 	struct course *find=NULL;
-	struct course *c_tail=load_end(c_head);
+	struct course *c_tail=load_cend(c_head);
 	int num;
 	printf("请输入要修改的课程编号：\n");
 	scanf("%d",&num);
-	find = find_num(c_head,num);
+	find = find_cnum(c_head,num);
 	if (find == c_tail){
 		printf("\n\t\t你所查找的课程不存在！\n");
 	}
