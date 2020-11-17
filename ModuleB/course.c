@@ -1,16 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "course.h"
+#include "def.h"
 
-
-int N1;
-struct course *c_head;
-
-int main()
-{
-	c_menu();
-}
 
 /*保存课程信息*/
 void c_save(struct course *c_head)
@@ -46,8 +35,7 @@ struct course *find_cnum(struct course *c_head,int num){
 }
 
 /*课程管理主页面*/
-void c_menu()
-{
+void c_menu(){
 
 int num;
 while(num<=5){
@@ -82,6 +70,7 @@ while(num<=5){
 			c_modify(c_head);
 			break;
 		case 6:
+			printf("返回上一菜单\n");
 			break;
 	}
 }

@@ -1,16 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "course.h"
+#include "def.h"
 
-
-int N1;
-struct course *c_head;
-
-int main()
-{
-	c_menu();
-}
 
 /*保存课程信息*/
 void c_save(struct course *c_head)
@@ -46,8 +35,7 @@ struct course *find_cnum(struct course *c_head,int num){
 }
 
 /*课程管理主页面*/
-void c_menu()
-{
+void c_menu(){
 
 int num;
 while(num<=5){
@@ -224,7 +212,7 @@ struct course *load_cend(struct course *c_head)
 /*根据课程号修改课程信息*/
 void c_modify(struct course *c_head){
 	struct course *find=NULL;
-	struct course *c_tail=load_end(c_head);
+	struct course *c_tail=load_cend(c_head);
 	int num;
 	printf("请输入要修改的课程编号：\n");
 	scanf("%d",&num);

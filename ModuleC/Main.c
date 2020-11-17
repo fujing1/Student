@@ -1,10 +1,9 @@
-#include<stdio.h>
-#include"student.h"
-#include"course.h"
+#include"def.h"
+
 int main(void)
 {
 	int num;
-	start:
+while(num<3){
   	printf(" \n                    \n");
 	printf("*********************学生选课管理系统*************************       \n");
 	printf("     *********************************************     \n");
@@ -18,20 +17,18 @@ int main(void)
 	printf("请选择菜单编号:");
 	scanf("%d", &num);
 	switch(num){
-		case 1:{
-			system("cls");
+		case (1):{
 			s_menu();
-			goto start;
 			break;
 		}
-		case 2:{
-			system("cls");
+		case (2):{
 			c_menu();
-			goto start;
 			break;
 		}
-		case 3:{
+		case (3):{
 			printf("即将退出本系统！\n");
 			break;
 		}
+	}
+}
 }

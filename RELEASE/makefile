@@ -1,5 +1,5 @@
 pro:*.o
-	gcc $^ -o $@
+	gcc $^ -o ../$@
 
 .PHONY:clean
 clean:

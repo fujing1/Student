@@ -14,8 +14,8 @@ struct course //课程信息结构体
 };
 
 void load_cou();
-struct course *find_num(struct course *c_head,int num);  //按课程号查找课程
-struct course *load_end(struct course *c_head);  //文件尾
+struct course *find_cnum(struct course *c_head,int num);  //按课程号查找课程
+struct course *load_cend(struct course *c_head);  //文件尾
 void c_menu();                                 //主菜单
 void c_insert(struct course *c_head);        //增加课程的函数
 void c_show(struct course *c_head);       //根据课程号展示课程信息

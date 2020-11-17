@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "student.h"
-
-int N;
-struct student *head;
-
-int main()
-{
-	s_menu();
-}
+#include "def.h"
 
 /*保存学生信息*/
 void s_save(struct student *head)
@@ -392,7 +381,7 @@ while(num<9){
 			break;
 
 		case 9:
-			printf("即将退出程序!\n");
+			printf("返回上一菜单!\n");
 			break;
 		default:printf("请在1-9之间选择\n");
 	}

@@ -1,6 +1,6 @@
 VPATH=../Include
 CFLAG=-I../Include
-OBJE=course.o
+OBJE=Main.o
 $(OBJE):%o:%c
 	gcc $(CFLAG) -c $^ -o ../RELEASE/$@
 

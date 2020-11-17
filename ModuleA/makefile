@@ -1,8 +1,8 @@
-VPATH=../include
-CFLAG=-I../include
-OBJE=main.o
+VPATH=../Include
+CFLAG=-I../Include
+OBJE=student.o
 $(OBJE):%o:%c
-	gcc $(CFLAG) -c $^ -o ../build/$@
+	gcc $(CFLAG) -c $^ -o ../RELEASE/$@
 
 .PHONY:clean
 clean:

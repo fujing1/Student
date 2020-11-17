@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "student.h"
-
-int N;
-struct student *head;
-
-int main()
-{
-	s_menu();
-}
+#include "def.h"
 
 /*保存学生信息*/
 void s_save(struct student *head)
